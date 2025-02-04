@@ -1,0 +1,1 @@
+export const  JOOMLA_TOKEN = 'JOOMLA_TOKEN'

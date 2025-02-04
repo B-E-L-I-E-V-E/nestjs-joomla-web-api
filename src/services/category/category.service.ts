@@ -1,17 +1,18 @@
-import { Injectable } from "@nestjs/common";
+import {Inject, Injectable} from "@nestjs/common";
 import { HttpService } from "@nestjs/axios";
 import { firstValueFrom } from "rxjs";
+import {JOOMLA_TOKEN} from "../../constants";
 
 @Injectable()
 export class CategoryService {
-  constructor(private httpService: HttpService) {}
+  constructor(private httpService: HttpService, @Inject(JOOMLA_TOKEN) private token: string) {}
   public async ReadCategoriesAPI() {
     try {
       let errors = [];
 
       const headers = {
         "Content-Type": "application/json",
-        "X-Joomla-Token": process.env.JOOMLA_API_TOKEN,
+        "X-Joomla-Token":JOOMLA_TOKEN,
       };
 
       let response = await firstValueFrom(
@@ -41,7 +42,7 @@ export class CategoryService {
 
       const headers = {
         "Content-Type": "application/json",
-        "X-Joomla-Token": process.env.JOOMLA_API_TOKEN,
+        "X-Joomla-Token":JOOMLA_TOKEN,
       };
 
       let response = await firstValueFrom(
