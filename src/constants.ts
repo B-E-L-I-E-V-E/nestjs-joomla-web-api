@@ -1,1 +1,1 @@
-export const  JOOMLA_TOKEN = 'JOOMLA_TOKEN'
+export const JOOMLA_CONFIG = 'JOOMLA_CONFIG';

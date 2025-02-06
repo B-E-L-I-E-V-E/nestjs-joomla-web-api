@@ -1,13 +1,13 @@
-import {DynamicModule, Module, Provider} from '@nestjs/common';
+import { DynamicModule, Module, Provider } from '@nestjs/common';
 
-import {
-  ArticleService,
-} from "./services/article/article.service";
-import { CategoryService } from "./services/category/category.service";
-import { ArticleController } from "./controllers/article/article.controller";
-import { CategoryController } from "./controllers/category/category.controller";
-import {HttpModule} from "@nestjs/axios";
-import {JOOMLA_TOKEN} from "./constants";
+import { ArticleService } from './services/article/article.service';
+import { CategoryService } from './services/category/category.service';
+import { ArticleController } from './controllers/article/article.controller';
+import { CategoryController } from './controllers/category/category.controller';
+import { HttpModule } from '@nestjs/axios';
+import { JOOMLA_CONFIG } from './constants';
+import { JoomlaConfig, JoomlaConfigAsync } from "./types/joomla-config.interface";
+import { ConfigurableModuleClass } from '@nestjs/common/cache/cache.module-definition';
 
 @Module({
   imports: [HttpModule],
@@ -15,18 +15,34 @@ import {JOOMLA_TOKEN} from "./constants";
   exports: [ArticleService, CategoryService],
   controllers: [ArticleController, CategoryController],
 })
-export class JoomlaWebApiModule {
-  static forRoot(config: { token: string;  }) : DynamicModule {
+export class JoomlaWebApiModule extends ConfigurableModuleClass {
+  static register(config: JoomlaConfig): DynamicModule {
     const joomlaProvider: Provider = {
-      provide: JOOMLA_TOKEN,
-      useValue: config.token,
-    }
+      provide: JOOMLA_CONFIG,
+      useValue: config,
+    };
 
     return {
       module: JoomlaWebApiModule,
       providers: [joomlaProvider],
       exports: [joomlaProvider],
-      global: true
-    }
+      global: true,
+    };
+  }
+
+  static registerAsync(config: JoomlaConfigAsync): DynamicModule {
+    const joomlaProvider: Provider = {
+      provide: JOOMLA_CONFIG,
+      useFactory: config.useFactory,
+      inject: config.inject,
+    };
+
+    return {
+      module: JoomlaWebApiModule,
+      imports: config.imports,
+      providers: [joomlaProvider],
+      exports: [joomlaProvider],
+      global: true,
+    };
   }
 }

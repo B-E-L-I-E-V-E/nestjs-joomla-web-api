@@ -1,28 +1,33 @@
-import {Inject, Injectable} from "@nestjs/common";
-import { firstValueFrom } from "rxjs";
-import { HttpService } from "@nestjs/axios";
-import {JOOMLA_TOKEN} from "../../constants";
+import { Inject, Injectable } from '@nestjs/common';
+import { firstValueFrom } from 'rxjs';
+import { HttpService } from '@nestjs/axios';
+
+import { JoomlaConfig } from '../../types/joomla-config.interface';
+import { JOOMLA_CONFIG } from '../../constants';
 
 @Injectable()
 export class ArticleService {
-  constructor(private httpService: HttpService, @Inject(JOOMLA_TOKEN) private token: string) {}
+  constructor(
+    private httpService: HttpService,
+    @Inject(JOOMLA_CONFIG) private joomlaConfig: JoomlaConfig,
+  ) {}
 
   public async ReadArticlesAPI() {
     try {
-      let errors = [];
+      const errors = [];
 
       const headers = {
-        "Content-Type": "application/json",
-        "X-Joomla-Token": JOOMLA_TOKEN,
+        'Content-Type': 'application/json',
+        'X-Joomla-Token': this.joomlaConfig.apiKey,
       };
 
-      let response = await firstValueFrom(
-        this.httpService.get(process.env.BLOG_API + `/content/articles`, {
-          method: "GET",
+      const response = await firstValueFrom(
+
+        this.httpService.get(this.joomlaConfig.baseUrl + `/content/articles`, {
+          method: 'GET',
           headers,
         }),
       ).catch((error) => {
-        console.log(error);
         errors.push(error);
         return null;
       });
@@ -39,20 +44,22 @@ export class ArticleService {
 
   public async ReadArticleByIdAPI(id: number) {
     try {
-      let errors = [];
+      const errors = [];
 
       const headers = {
-        "Content-Type": "application/json",
-        "X-Joomla-Token": JOOMLA_TOKEN,
+        'Content-Type': 'application/json',
+        'X-Joomla-Token': this.joomlaConfig.apiKey,
       };
 
-      let response = await firstValueFrom(
-        this.httpService.get(process.env.BLOG_API + `/content/articles/${id}`, {
-          method: "GET",
-          headers,
-        }),
+      const response = await firstValueFrom(
+        this.httpService.get(
+          this.joomlaConfig.baseUrl + `/content/articles/${id}`,
+          {
+            method: 'GET',
+            headers,
+          },
+        ),
       ).catch((error) => {
-        console.log(error);
         errors.push(error);
         return null;
       });

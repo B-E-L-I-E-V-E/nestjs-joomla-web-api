@@ -1,11 +1,11 @@
 {
   "name": "@believablecreations/nestjs-joomla-web-api",
-  "version": "0.0.1",
-  "description": "",
+  "version": "0.0.5-beta-2",
+  "description": "The Joomla API Integration for NestJS is a powerful and flexible NestJS plugin that enables seamless communication with Joomla's API. Designed for developers building applications that require data retrieval and management from Joomla-based websites, this plugin simplifies API interactions by providing an injectable service that handles authentication and request management.",
   "main": "./build/index.js",
   "types": "./build/index.d.ts",
   "author": "Believable Creaitons Inc",
-  "private": true,
+  "private": false,
   "license": "MIT",
   "scripts": {
     "build": "nest build",
@@ -19,7 +19,8 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./test/jest-e2e.json"
+    "test:e2e": "jest --config ./test/jest-e2e.json",
+    "publish": "npm publish"
   },
   "dependencies": {
     "@nestjs/axios": "^4.0.0",
@@ -68,5 +69,10 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
-  }
+  },
+  "keywords": [
+    "nestjs",
+    "joomla",
+    "web-api"
+  ]
 }
