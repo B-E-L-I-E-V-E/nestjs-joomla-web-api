@@ -21,6 +21,6 @@ describe('ArticleService', () => {
       const response = await ArticleSvc.ReadArticlesAPI();
 
       console.log(response);
-    })
-  })
+    });
+  });
 });

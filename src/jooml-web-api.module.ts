@@ -6,7 +6,10 @@ import { ArticleController } from './controllers/article/article.controller';
 import { CategoryController } from './controllers/category/category.controller';
 import { HttpModule } from '@nestjs/axios';
 import { JOOMLA_CONFIG } from './constants';
-import { JoomlaConfig, JoomlaConfigAsync } from "./types/joomla-config.interface";
+import {
+  JoomlaConfig,
+  JoomlaConfigAsync,
+} from './types/joomla-config.interface';
 import { ConfigurableModuleClass } from '@nestjs/common/cache/cache.module-definition';
 
 @Module({
