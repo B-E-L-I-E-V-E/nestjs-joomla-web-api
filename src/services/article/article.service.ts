@@ -24,7 +24,7 @@ export class ArticleService {
 
       const response = await firstValueFrom(
         this.httpService.get<{ data: Array<Article> }>(
-          this.joomlaConfig.baseUrl + `/content/articles/${id}`,
+          this.joomlaConfig.baseUrl + `/content/articles`,
           {
             method: 'GET',
             headers,
@@ -38,7 +38,7 @@ export class ArticleService {
       if (errors.length > 0) {
         return { response: [], errors: errors };
       }
-
+      
       return {
         response: response.data.data.filter(
           (article: Article) => article.relationships.category.data.id === id,
@@ -53,7 +53,6 @@ export class ArticleService {
   public async ReadArticlesAPI() {
     try {
       const errors = [];
-
       const headers = {
         'Content-Type': 'application/json',
         'X-Joomla-Token': this.joomlaConfig.apiKey,
