@@ -10,7 +10,6 @@ import {
   JoomlaConfig,
   JoomlaConfigAsync,
 } from './types/joomla-config.interface';
-import { ConfigurableModuleClass } from '@nestjs/common/cache/cache.module-definition';
 
 @Module({
   imports: [HttpModule],
@@ -18,7 +17,7 @@ import { ConfigurableModuleClass } from '@nestjs/common/cache/cache.module-defin
   exports: [ArticleService, CategoryService],
   controllers: [ArticleController, CategoryController],
 })
-export class JoomlaWebApiModule extends ConfigurableModuleClass {
+export class JoomlaWebApiModule {
   static register(config: JoomlaConfig): DynamicModule {
     const joomlaProvider: Provider = {
       provide: JOOMLA_CONFIG,
